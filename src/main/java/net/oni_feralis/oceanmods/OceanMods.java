@@ -1,5 +1,8 @@
 package net.oni_feralis.oceanmods;
 
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -37,18 +40,16 @@ public class OceanMods {
     public static final String MOD_ID = "oceanmods";
     // Directly reference a slf4j logger
     public static final Logger LOGGER = LogUtils.getLogger();
-    // Create a Deferred Register to hold Blocks which will all be registered under the "examplemod" namespace
+        // Create a Deferred Register to hold Blocks which will all be registered under the "examplemod" namespace
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(MOD_ID);
     // Create a Deferred Register to hold Items which will all be registered under the "examplemod" namespace
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MOD_ID);
     // Create a Deferred Register to hold CreativeModeTabs which will all be registered under the "examplemod" namespace
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
 
-    // Creates a new Block with the id "examplemod:example_block", combining the namespace and path
     public static final DeferredBlock<Block> EXAMPLE_BLOCK = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
     // Creates a new BlockItem with the id "examplemod:example_block", combining the namespace and path
     public static final DeferredItem<BlockItem> EXAMPLE_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("example_block", EXAMPLE_BLOCK);
-
     // Creates a new food item with the id "examplemod:example_id", nutrition 1 and saturation 2
     public static final DeferredItem<Item> EXAMPLE_ITEM = ITEMS.registerSimpleItem("example_item", new Item.Properties().food(new FoodProperties.Builder()
             .alwaysEdible().nutrition(1).saturationModifier(2f).build()));
@@ -110,6 +111,8 @@ public class OceanMods {
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
+
+
         // Do something when the server starts
         LOGGER.info("HELLO from server starting");
     }

@@ -1,0 +1,13 @@
+{
+  "itemGroup.oceanmods": "Example Mod Tab",
+  "block.oceanmods.example_block": "Example Block",
+  "item.oceanmods.example_item": "Example Item",
+
+  "oceanmods.configuration.title": "Example Mod Configs",
+  "oceanmods.configuration.section.oceanmods.common.toml": "Example Mod Configs",
+  "oceanmods.configuration.section.oceanmods.common.toml.title": "Example Mod Configs",
+  "oceanmods.configuration.items": "Item List",
+  "oceanmods.configuration.logDirtBlock": "Log Dirt Block",
+  "oceanmods.configuration.magicNumberIntroduction": "Magic Number Text",
+  "oceanmods.configuration.magicNumber": "Magic Number"
+}
