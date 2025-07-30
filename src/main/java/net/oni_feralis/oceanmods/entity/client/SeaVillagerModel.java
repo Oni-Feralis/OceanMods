@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.animation.*;
 import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -13,13 +14,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.oni_feralis.oceanmods.OceanMods;
+import net.oni_feralis.oceanmods.entity.AbstractSeaVillagerEntity;
 
-public class SeaVillagerModel extends EntityModel<SeaVillagerRenderState> {
+public class SeaVillagerModel extends HierarchicalModel<AbstractSeaVillagerEntity>
+{
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-
-	public static final ModelLayerLocation MY_LAYER =
-			new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(OceanMods.MOD_ID, "seavillager"), "main");
-
 	private final ModelPart crab;
 	private final ModelPart upperBody;
 	private final ModelPart torso;
@@ -47,7 +46,8 @@ public class SeaVillagerModel extends EntityModel<SeaVillagerRenderState> {
 	private final ModelPart frontRightLeggy;
 	private final ModelPart frontRightFoot;
 
-	public SeaVillagerModel(ModelPart root) {
+	public SeaVillagerModel(ModelPart root)
+	{
 		this.crab = root.getChild("crab");
 		this.upperBody = this.crab.getChild("upperBody");
 		this.torso = this.upperBody.getChild("torso");
@@ -76,11 +76,12 @@ public class SeaVillagerModel extends EntityModel<SeaVillagerRenderState> {
 		this.frontRightFoot = this.frontRightLeg.getChild("frontRightFoot");
 	}
 
-	public static LayerDefinition createBodyLayer() {
-		MeshDefinition meshdefinition = new MeshDefinition();
-		PartDefinition partdefinition = meshdefinition.getRoot();
+	public static LayerDefinition createBodyLayer()
+	{
+		MeshDefinition mesh = new MeshDefinition();
+		PartDefinition part = mesh.getRoot();
 
-		PartDefinition crab = partdefinition.addOrReplaceChild("crab", CubeListBuilder.create(), PartPose.offset(1.0F, 19.0F, -2.0F));
+		PartDefinition crab = part.addOrReplaceChild("crab", CubeListBuilder.create(), PartPose.offset(1.0F, 19.0F, -2.0F));
 
 		PartDefinition upperBody = crab.addOrReplaceChild("upperBody", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
@@ -162,11 +163,18 @@ public class SeaVillagerModel extends EntityModel<SeaVillagerRenderState> {
 
 		PartDefinition frontRightFoot = frontRightLeg.addOrReplaceChild("frontRightFoot", CubeListBuilder.create().texOffs(32, 4).addBox(0.0F, -3.0F, -1.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(-0.85F, 2.5F, 0.5F));
 
-		return LayerDefinition.create(meshdefinition, 64, 64);
+		return LayerDefinition.create(mesh, 64, 64);
 	}
 
 	@Override
-	public void setupAnim(SeaVillagerRenderState state) {
+	public ModelPart root()
+	{
+		return this.crab;
+	}
+
+
+	@Override
+	public void setupAnim(AbstractSeaVillagerEntity entity, ) {
 		super.setupAnim(state);
 		crab.visible = state.myBoolean();
 		crab.xRot = state.myXRotation();
